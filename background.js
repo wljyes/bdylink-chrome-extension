@@ -3,7 +3,7 @@ chrome.contextMenus.create({
     contexts:['selection'], //选中文字时才会出现此右键菜单
     onclick: function(params)
     {
-        var reg = /([0-9a-zA-Z-_]+)(?:[^0-9a-zA-Z]+)?([a-zA-Z]{4})?/;
+        var reg = /([0-9a-zA-Z-_]+)(?:[^0-9a-zA-Z]+)?([a-zA-Z0-9]{4})?/;
         var matches = reg.exec(params.selectionText);
         if (matches.length == 0) {
             //regex not match any string, maybe the selected string isn't a baidu pan link
@@ -16,8 +16,8 @@ chrome.contextMenus.create({
         } else if (matches.length == 3) {
             //this means the link has a verify code
             chrome.tabs.create({url:'https://pan.baidu.com/s/' + matches[1]}, function(tab) {
-                var fillcode = "document.getElementById('wkwj9A').innerText = " + matches[2] + ";";
-                chrome.tabs.executeScript(tab.id, {code:fillcode})
+                var fillcode = "document.getElementById('wkwj9A').value = " + "'" + matches[2] + "'" + ";";
+                chrome.tabs.executeScript(tab.id, {code:fillcode});
             });
         }
     }

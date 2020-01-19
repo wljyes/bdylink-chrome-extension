@@ -5,5 +5,9 @@
     "background":{
         "scripts":["background.js"]
     },
-    "permissions":["contextMenus", "tabs"]
+    "permissions":[
+        "contextMenus",
+         "tabs",
+         "https://*/*"
+        ]
 }
