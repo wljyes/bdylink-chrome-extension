@@ -15,8 +15,10 @@ chrome.contextMenus.create({
             chrome.tabs.create({url:'https://pan.baidu.com/s/' + link_suffix});
         } else if (matches.length == 3) {
             //this means the link has a verify code
-            chrome.tabs.create({url:'https://pan.baidu.com/s/' + matches[1]});
-            document.getElementById("wkwj9A").innerText = matches[2];
+            chrome.tabs.create({url:'https://pan.baidu.com/s/' + matches[1]}, function(tab) {
+                var fillcode = "document.getElementById('wkwj9A').innerText = " + matches[2] + ";";
+                chrome.tabs.executeScript(tab.id, {code:fillcode})
+            });
         }
     }
 })
